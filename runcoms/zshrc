@@ -11,3 +11,15 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Enter root conda environment
+
+export EDITOR=vim
+cd /data/vision/oliva/scratch/aandonia
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias mdb="mongod -f /data/vision/oliva/scratch/aandonia/data/mongod.conf"
+alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__"     -delete'
