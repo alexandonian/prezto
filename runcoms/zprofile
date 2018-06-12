@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+export EDITOR='vim'
+export VISUAL='vim'
 export PAGER='less'
 
 #
@@ -73,7 +73,7 @@ export PATH=${CUDA_HOME}/bin:$PATH
 
 # Anaconda last in path to provide conda without masking system python
 #export ANACONDA_HOME=/opt/anaconda
-export ANACONDA_HOME=/afs/csail.mit.edu/u/a/aandonia/anaconda2
+export ANACONDA_HOME=${HOME}/anaconda3
 export PATH=${ANACONDA_HOME}/bin:$PATH
 #export PATH=$PATH:${ANACONDA_HOME}/bin
 
@@ -87,4 +87,3 @@ export PATH=$PATH:${OPENCV_HOME}
 # Matlab is at the end to prevent masking system "ldd"
 export MATLAB_ROOT=/afs/csail.mit.edu/system/common/matlab/latest
 export PATH=$PATH:${MATLAB_ROOT}/bin
-echo "zprofile sourced"
