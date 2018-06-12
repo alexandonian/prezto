@@ -11,3 +11,52 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Enable AutoJump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# ---- ALIASES --------------------------------------------
+# Application aliases
+alias s=subl
+alias fb=fb-messenger-cli
+alias gs="git status"
+
+# Start Mongod
+alias mdb="mongod --fork --logpath /var/log/mongod.log"
+
+# Vision Cluster aliases
+alias v="ssh aandonia@visiongpu25.csail.mit.edu"
+alias v14="ssh aandonia@visiongpu14.csail.mit.edu"
+alias v15="ssh aandonia@visiongpu15.csail.mit.edu"
+alias v16="ssh aandonia@visiongpu16.csail.mit.edu"
+alias v17="ssh aandonia@visiongpu17.csail.mit.edu"
+alias v18="ssh aandonia@visiongpu18.csail.mit.edu"
+alias v19="ssh aandonia@visiongpu19.csail.mit.edu"
+alias v20="ssh aandonia@visiongpu20.csail.mit.edu"
+alias v21="ssh aandonia@visiongpu21.csail.mit.edu"
+alias v22="ssh aandonia@visiongpu22.csail.mit.edu"
+alias v23="ssh aandonia@visiongpu23.csail.mit.edu"
+alias v24="ssh aandonia@visiongpu24.csail.mit.edu"
+alias v25="ssh aandonia@visiongpu25.csail.mit.edu"
+alias v26="ssh aandonia@visiongpu26.csail.mit.edu"
+alias v27="ssh aandonia@visiongpu27.csail.mit.edu"
+alias v28="ssh aandonia@visiongpu28.csail.mit.edu"
+
+# Neuroailab Cluster aliases
+alias kan="ssh aandonia@171.64.40.90"
+
+# Filesystem Mounts
+alias mnfs="sshfs aandonia@visiongpu23.csail.mit.edu:/data /nfs -ovolname=NFS"
+alias mkan="sshfs aandonia@kanefsky:/home/aandonia /kan -ovolname=KAN"
+alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
+
+gif() {
+        ffmpeg -i "$1" -s 300x200 -r 10 -f gif - | gifsicle --optimize=3 --delay=10 > "${1%.*}.gif"
+}
+gif_all() {
+     IFS='\n';     
+     while read -r; do
+        echo $REPLY
+        ffmpeg -i "$REPLY" -s 300x200 -r 10 -f gif - | gifsicle --optimize=3 --delay=10 > "${REPLY%.*}.gif"
+    done
+}
