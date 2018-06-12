@@ -60,3 +60,4 @@ gif_all() {
         ffmpeg -i "$REPLY" -s 300x200 -r 10 -f gif - | gifsicle --optimize=3 --delay=10 > "${REPLY%.*}.gif"
     done
 }
+
