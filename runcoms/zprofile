@@ -65,11 +65,19 @@ fi
 test -f /etc/profile.d/modules.sh && source /etc/profile.d/modules.sh
 
 export HOME=/data/vision/oliva/scratch/aandonia
+export PATH=${HOME}/bin:$PATH
+
 export MKL_HOME=/opt/intel/mkl
 export PATH=${MKL_HOME}/bin:$PATH
 
-export CUDA_HOME=/usr/local/cuda
+export CUDA_HOME=/usr/local/cuda-10.1
 export PATH=${CUDA_HOME}/bin:$PATH
+
+export NCCL_SOCKET_IFNAME=enp4s0f0
+export NCCL_HOME=/usr/local/nccl_2.3.7-1
+export OPENMPI_HOME=/opt/openmpi-4.0.0
+
+export NVVL_HOME=${HOME}/lib/nvvl
 
 # Anaconda last in path to provide conda without masking system python
 #export ANACONDA_HOME=/opt/anaconda
@@ -87,3 +95,12 @@ export PATH=$PATH:${OPENCV_HOME}
 # Matlab is at the end to prevent masking system "ldd"
 export MATLAB_ROOT=/afs/csail.mit.edu/system/common/matlab/latest
 export PATH=$PATH:${MATLAB_ROOT}/bin
+
+#export LIBGLVND_HOME=${HOME}/lib/libglvnd/install/lib
+#export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${LIBGLVND_HOME}/pkgconfig
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LIBGLVND_HOME}:/usr/local/lib
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LIBGLVND_HOME}:${ANACONDA_HOME}/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NCCL_HOME}/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NVVL_HOME}/build
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/x86_64-linux-gnu
+cd $HOME

@@ -11,15 +11,56 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+# Autojump
+[[ -s /data/vision/oliva/scratch/aandonia/.autojump/etc/profile.d/autojump.sh ]] && source /data/vision/oliva/scratch/aandonia/.autojump/etc/profile.d/autojump.sh
+autoload -U compinit && compinit -u
 
-# Enter root conda environment
+# Mixed (custom) Vi-Emacs keybindings
+bindkey -v "^A" beginning-of-line
+bindkey -v "^B" backward-char
+bindkey -v "^E" end-of-line
+bindkey -v "^B" backward-char
+bindkey -v "^F" forward-char
+bindkey -v "^K" kill-line
+bindkey -v "^N" history-substring-search-down
+bindkey -v "^P" history-substring-search-up
+bindkey -v "^U" kill-whole-line
+bindkey -v "^Y" yank
+bindkey -M vicmd "^A" beginning-of-line
+bindkey -M vicmd "^E" end-of-line
+bindkey -M vicmd "^B" backward-char
+bindkey -M vicmd "^F" forward-char
+bindkey -M vicmd "^K" kill-line
+bindkey -M vicmd "^U" kill-whole-line
+bindkey -M vicmd "^N" history-substring-search-down
+bindkey -M vicmd "^P" history-substring-search-up
+bindkey -M vicmd v edit-command-line
+#export KEYTIMEOUT=1
 
 export EDITOR=vim
-cd /data/vision/oliva/scratch/aandonia
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias mdb="mongod -f /data/vision/oliva/scratch/aandonia/data/mongod.conf"
-alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__"     -delete'
+alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
+alias t="tmux"
+alias ta="tmux a"
+alias gs="git status"
+alias wn="watch --color -n 1 gpustat --color"
+alias fire="python -m fire"
+alias f="fire"
+
+c() {
+    export CUDA_VISIBLE_DEVICES="$@";
+}
+
+
+#. /data/vision/oliva/scratch/aandonia/torch/install/bin/torch-activate
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/data/vision/oliva/scratch/aandonia/lib/google-cloud-sdk/path.zsh.inc' ]; then . '/data/vision/oliva/scratch/aandonia/lib/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/data/vision/oliva/scratch/aandonia/lib/google-cloud-sdk/completion.zsh.inc' ]; then . '/data/vision/oliva/scratch/aandonia/lib/google-cloud-sdk/completion.zsh.inc'; fi
