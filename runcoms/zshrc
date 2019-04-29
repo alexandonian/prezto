@@ -11,21 +11,73 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-
 # Enable AutoJump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+autoload -U compinit && compinit -u
+
+# Mixed (custom) Vi-Emacs keybindings
+bindkey -v "^A" beginning-of-line
+bindkey -v "^B" backward-char
+bindkey -v "^E" end-of-line
+bindkey -v "^B" backward-char
+bindkey -v "^F" forward-char
+bindkey -v "^K" kill-line
+bindkey -v "^N" history-substring-search-down
+bindkey -v "^P" history-substring-search-up
+bindkey -v "^U" kill-whole-line
+bindkey -v "^Y" yank
+bindkey -M vicmd "^A" beginning-of-line
+bindkey -M vicmd "^E" end-of-line
+bindkey -M vicmd "^B" backward-char
+bindkey -M vicmd "^F" forward-char
+bindkey -M vicmd "^K" kill-line
+bindkey -M vicmd "^U" kill-whole-line
+bindkey -M vicmd "^N" history-substring-search-down
+bindkey -M vicmd "^P" history-substring-search-up
+bindkey -M vicmd v edit-command-line
+export KEYTIMEOUT=1
+
+export EDITOR=vim
 
 # ---- ALIASES --------------------------------------------
 # Application aliases
 alias s=subl
+alias grep=ggrep
 alias fb=fb-messenger-cli
 alias gs="git status"
+alias ta="tmux a"
+alias t="tmux"
+alias fire="python -m fire"
+alias f="python -m fire"
+alias e="emacs"
+
+# gcloud alias
+alias gssh='gcloud compute ssh'
+
+# IBM cloud VMs
+alias v1='ssh root@169.62.41.99'
+alias v2='ssh root@169.62.41.108'
+alias v3='ssh root@169.62.41.104'
+alias v4='ssh root@169.62.41.100'
+alias v5='ssh root@169.62.41.98'
+alias v6='ssh root@169.62.41.103'
+alias v7='ssh root@169.62.41.105'
+alias v8='ssh root@169.62.41.102'
 
 # Start Mongod
 alias mdb="mongod --fork --logpath /var/log/mongod.log"
+alias mdb_port='lsof -iTCP -sTCP:LISTEN | grep mongo | grep -oP "(?<=\*:)\d+"'
 
 # Vision Cluster aliases
 alias v="ssh aandonia@visiongpu25.csail.mit.edu"
+alias v03="ssh aandonia@visiongpu03.csail.mit.edu"
+alias v04="ssh aandonia@visiongpu04.csail.mit.edu"
+alias v05="ssh aandonia@visiongpu05.csail.mit.edu"
+alias v08="ssh aandonia@visiongpu08.csail.mit.edu"
+alias v10="ssh aandonia@visiongpu10.csail.mit.edu"
+alias v11="ssh aandonia@visiongpu11.csail.mit.edu"
+alias v12="ssh aandonia@visiongpu12.csail.mit.edu"
+alias v13="ssh aandonia@visiongpu13.csail.mit.edu"
 alias v14="ssh aandonia@visiongpu14.csail.mit.edu"
 alias v15="ssh aandonia@visiongpu15.csail.mit.edu"
 alias v16="ssh aandonia@visiongpu16.csail.mit.edu"
@@ -41,7 +93,58 @@ alias v25="ssh aandonia@visiongpu25.csail.mit.edu"
 alias v26="ssh aandonia@visiongpu26.csail.mit.edu"
 alias v27="ssh aandonia@visiongpu27.csail.mit.edu"
 alias v28="ssh aandonia@visiongpu28.csail.mit.edu"
+alias v29="ssh aandonia@visiongpu29.csail.mit.edu"
+alias v30="ssh aandonia@visiongpu30.csail.mit.edu"
+alias v31="ssh aandonia@visiongpu31.csail.mit.edu"
+alias v32="ssh aandonia@visiongpu32.csail.mit.edu"
+alias v33="ssh aandonia@visiongpu33.csail.mit.edu"
+alias v34="ssh aandonia@visiongpu34.csail.mit.edu"
+alias v35="ssh aandonia@visiongpu35.csail.mit.edu"
+alias v36="ssh aandonia@visiongpu36.csail.mit.edu"
+alias v37="ssh aandonia@visiongpu37.csail.mit.edu"
+alias v38="ssh aandonia@visiongpu38.csail.mit.edu"
+alias v39="ssh aandonia@visiongpu39.csail.mit.edu"
+alias v40="ssh aandonia@visiongpu40.csail.mit.edu"
+alias v41="ssh aandonia@visiongpu41.csail.mit.edu"
+alias v42="ssh aandonia@visiongpu42.csail.mit.edu"
+alias v43="ssh aandonia@visiongpu43.csail.mit.edu"
 
+alias tues="ssh aandonia@tuesday.csail.mit.edu"
+alias wed="ssh aandonia@wednesday.csail.mit.edu"
+
+alias c="ssh aandonia@vision20.csail.mit.edu"
+alias c04="ssh aandonia@vision04.csail.mit.edu"
+alias c05="ssh aandonia@vision05.csail.mit.edu"
+alias c08="ssh aandonia@vision08.csail.mit.edu"
+alias c10="ssh aandonia@vision10.csail.mit.edu"
+alias c12="ssh aandonia@vision12.csail.mit.edu"
+alias c13="ssh aandonia@vision13.csail.mit.edu"
+alias c14="ssh aandonia@vision14.csail.mit.edu"
+alias c15="ssh aandonia@vision15.csail.mit.edu"
+alias c16="ssh aandonia@vision16.csail.mit.edu"
+alias c17="ssh aandonia@vision17.csail.mit.edu"
+alias c18="ssh aandonia@vision18.csail.mit.edu"
+alias c19="ssh aandonia@vision19.csail.mit.edu"
+alias c20="ssh aandonia@vision20.csail.mit.edu"
+alias c21="ssh aandonia@vision21.csail.mit.edu"
+alias c22="ssh aandonia@vision22.csail.mit.edu"
+alias c23="ssh aandonia@vision23.csail.mit.edu"
+alias c24="ssh aandonia@vision24.csail.mit.edu"
+alias c25="ssh aandonia@vision25.csail.mit.edu"
+alias c26="ssh aandonia@vision26.csail.mit.edu"
+alias c27="ssh aandonia@vision27.csail.mit.edu"
+alias c28="ssh aandonia@vision28.csail.mit.edu"
+alias c29="ssh aandonia@vision29.csail.mit.edu"
+alias c30="ssh aandonia@vision30.csail.mit.edu"
+alias c31="ssh aandonia@vision31.csail.mit.edu"
+alias c32="ssh aandonia@vision32.csail.mit.edu"
+alias c33="ssh aandonia@vision33.csail.mit.edu"
+alias c34="ssh aandonia@vision34.csail.mit.edu"
+alias c35="ssh aandonia@vision35.csail.mit.edu"
+alias c36="ssh aandonia@vision36.csail.mit.edu"
+alias c37="ssh aandonia@vision37.csail.mit.edu"
+alias c38="ssh aandonia@vision38.csail.mit.edu"
+alias c39="ssh aandonia@vision39.csail.mit.edu"
 # Neuroailab Cluster aliases
 alias kan="ssh aandonia@171.64.40.90"
 
@@ -51,13 +154,20 @@ alias mkan="sshfs aandonia@kanefsky:/home/aandonia /kan -ovolname=KAN"
 alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
 
 gif() {
-        ffmpeg -i "$1" -s 300x200 -r 10 -f gif - | gifsicle --optimize=3 --delay=10 > "${1%.*}.gif"
+        ffmpeg -i "$1" -r 10 -f gif - | gifsicle --optimize=3 --delay=15 > "${1%.*}.gif"
 }
 gif_all() {
-     IFS='\n';     
+     IFS='\n';
      while read -r; do
         echo $REPLY
         ffmpeg -i "$REPLY" -s 300x200 -r 10 -f gif - | gifsicle --optimize=3 --delay=10 > "${REPLY%.*}.gif"
     done
 }
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/alexandonian/Desktop/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/alexandonian/Desktop/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/alexandonian/Desktop/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/alexandonian/Desktop/google-cloud-sdk/completion.zsh.inc'; fi

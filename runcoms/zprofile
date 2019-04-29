@@ -64,37 +64,18 @@ fi
 
 # ENVIRONMENTAL VARIABLES ---------------------------------
 
-export ANACONDA_HOME=/Users/alexandonian/anaconda3
+#export ANACONDA_HOME=/Users/alexandonian/anaconda3
+export ANACONDA_HOME=${HOME}/anaconda3
 export PATH=${ANACONDA_HOME}/bin:$PATH
 
 export SUBL_HOME=/Applications/Sublime\ Text.app/Contents/SharedSupport/bin
 export PATH=$PATH:${SUBL_HOME}
 
-export HOME_BIN=/Users/alexandonian/bin
+export HOME_BIN=${HOME}/bin
 export PATH=$PATH:${HOME_BIN}
 
-test -f /etc/profile.d/modules.sh && source /etc/profile.d/modules.sh
+export MESHLAB_HOME=/Applications/meshlab.app/Contents/MacOS
+export PATH=$PATH:${MESHLAB_HOME}
 
-export HOME=/data/vision/oliva/scratch/aandonia
-export MKL_HOME=/opt/intel/mkl
-export PATH=${MKL_HOME}/bin:$PATH
-
-export CUDA_HOME=/usr/local/cuda
-export PATH=${CUDA_HOME}/bin:$PATH
-
-# Anaconda last in path to provide conda without masking system python
-#export ANACONDA_HOME=/opt/anaconda
-export ANACONDA_HOME=${HOME}/anaconda3
-export PATH=${ANACONDA_HOME}/bin:$PATH
-#export PATH=$PATH:${ANACONDA_HOME}/bin
-
-# Caffe is built locally to the machine
-export CAFFE_HOME=/opt/caffe
-export PATH=$PATH:${CAFFE_HOME}/bin
-
-export OPENCV_HOME=/data/vision/torralba/datasetbias/lib/opencv/2.4.5/install/lib/
-export PATH=$PATH:${OPENCV_HOME}
-
-# Matlab is at the end to prevent masking system "ldd"
-export MATLAB_ROOT=/afs/csail.mit.edu/system/common/matlab/latest
-export PATH=$PATH:${MATLAB_ROOT}/bin
+#export FREESURFER_HOME=/Applications/freesurfer
+#source $FREESURFER_HOME/SetUpFreeSurfer.sh
