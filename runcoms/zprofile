@@ -64,7 +64,6 @@ fi
 
 test -f /etc/profile.d/modules.sh && source /etc/profile.d/modules.sh
 
-export HOME=/data/vision/oliva/scratch/aandonia
 export PATH=${HOME}/bin:$PATH
 
 export MKL_HOME=/opt/intel/mkl
@@ -103,4 +102,3 @@ export PATH=$PATH:${MATLAB_ROOT}/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NCCL_HOME}/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NVVL_HOME}/build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/x86_64-linux-gnu
-cd $HOME
