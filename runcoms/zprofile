@@ -74,16 +74,14 @@ export CUDA_HOME=/usr/local/cuda-10.1
 export PATH=${CUDA_HOME}/bin:$PATH
 
 export NCCL_SOCKET_IFNAME=enp4s0f0
-export NCCL_HOME=/usr/local/nccl_2.3.7-1
+export NCCL_HOME=/usr/local/nccl-2.4
 export OPENMPI_HOME=/opt/openmpi-4.0.0
 
 export NVVL_HOME=${HOME}/lib/nvvl
 
 # Anaconda last in path to provide conda without masking system python
-#export ANACONDA_HOME=/opt/anaconda
 export ANACONDA_HOME=${HOME}/anaconda3
 export PATH=${ANACONDA_HOME}/bin:$PATH
-#export PATH=$PATH:${ANACONDA_HOME}/bin
 
 # Caffe is built locally to the machine
 export CAFFE_HOME=/opt/caffe
