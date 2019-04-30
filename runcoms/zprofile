@@ -72,7 +72,7 @@ export PATH=${MKL_HOME}/bin:$PATH
 export CUDA_HOME=/usr/local/cuda-10.1
 export PATH=${CUDA_HOME}/bin:$PATH
 
-export NCCL_SOCKET_IFNAME=enp4s0f0
+export NCCL_SOCKET_IFNAME=eth0
 export NCCL_HOME=/usr/local/nccl-2.4
 export OPENMPI_HOME=/opt/openmpi-4.0.0
 
