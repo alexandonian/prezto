@@ -74,8 +74,16 @@ export PATH=$PATH:${SUBL_HOME}
 export HOME_BIN=${HOME}/bin
 export PATH=$PATH:${HOME_BIN}
 
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 export MESHLAB_HOME=/Applications/meshlab.app/Contents/MacOS
 export PATH=$PATH:${MESHLAB_HOME}
 
+export NODE_PATH=/usr/local/lib/node_modules
+
 #export FREESURFER_HOME=/Applications/freesurfer
 #source $FREESURFER_HOME/SetUpFreeSurfer.sh
+export PYTEST_ADDOPTS="-W ignore::DeprecationWarning"
+export ADB_PATH="${HOME}/Library/Android/sdk/platform-tools"
+export PATH=${PATH}:${ADB_PATH}

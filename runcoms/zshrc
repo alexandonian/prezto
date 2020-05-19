@@ -54,104 +54,187 @@ alias e="emacs"
 # gcloud alias
 alias gssh='gcloud compute ssh'
 
+# Lambda Workstation
+# alias a='ssh andonian@ando-lambda.csail.mit.edu'
+# alias tal='ssh -fNL 8888:localhost:8888 andonian@ando-lambda.csail.mit.edu'
+alias a='ssh andonian@ando.ai'
+alias tal='ssh -fNL 8888:localhost:8888 andonian@andonian.io'
+
+alias tsat='ssh -fNL 8888:localhost:8888 satori-login-001.mit.edu'
+
+# Athena
+alias ath="ssh andonian@athena.dialup.mit.edu"
+
 # IBM cloud VMs
+alias aa='ssh root@169.62.56.118'
+alias vb1="ssh root@169.60.98.194"
 alias v1='ssh root@169.62.41.99'
-alias v2='ssh root@169.62.41.108'
+alias v2='ssh root@169.62.56.112'
 alias v3='ssh root@169.62.41.104'
 alias v4='ssh root@169.62.41.100'
 alias v5='ssh root@169.62.41.98'
 alias v6='ssh root@169.62.41.103'
 alias v7='ssh root@169.62.41.105'
 alias v8='ssh root@169.62.41.102'
+alias v9='ssh root@169.62.41.106'
+alias vi10='ssh root@169.62.41.107'
+alias vi11='ssh root@169.62.41.101'
+alias vi12='ssh root@169.62.41.110'
+alias vi13='ssh root@169.62.56.115'
+alias vi14='ssh root@169.62.56.113'
+alias vi15='ssh root@169.62.56.99'
+alias vi16='ssh root@169.62.56.126'
+alias vi17='ssh root@169.62.56.123'
+alias vi18='ssh root@169.62.56.106'
+alias vi19='ssh root@169.62.56.120'
+alias vi20='ssh root@169.62.56.117'
+alias vi21='ssh root@169.62.41.109'
+alias vi22='ssh root@169.62.56.104'
+alias vi23='ssh root@169.62.56.103'
+alias vi24='ssh root@169.62.56.111'
+alias vi25='ssh root@169.62.56.105'
+alias vi26='ssh root@169.62.56.124'
+alias vi27='ssh root@169.62.56.116'
+alias vi28='ssh root@169.62.56.108'
+alias vi29='ssh root@169.62.56.102'
+alias vi30='ssh root@169.62.56.119'
+alias vi31='ssh root@169.62.56.114'
+alias vi32='ssh root@169.62.56.101'
+alias vi33='ssh root@169.62.56.107'
+alias vi34='ssh root@169.62.56.125'
+alias vi35='ssh root@169.62.56.100'
+alias vi36='ssh root@169.62.41.108'
+alias vi37='ssh root@169.62.56.98'
+alias vi38='ssh root@169.62.15.148'
+alias vi39='ssh root@169.62.56.110'
+alias vi40='ssh root@169.62.15.135'
+alias vi41='ssh root@169.62.56.109'
+alias vi42='ssh root@169.62.15.190'
+alias vi43='ssh root@169.62.15.149'
+alias vi44='ssh root@169.62.56.122'
+alias vi45='ssh root@169.62.15.189'
+alias vi46='ssh root@169.62.56.121'
 
 # Start Mongod
 alias mdb="mongod --fork --logpath /var/log/mongod.log"
 alias mdb_port='lsof -iTCP -sTCP:LISTEN | grep mongo | grep -oP "(?<=\*:)\d+"'
 
 # Vision Cluster aliases
-alias v="ssh aandonia@visiongpu25.csail.mit.edu"
-alias v03="ssh aandonia@visiongpu03.csail.mit.edu"
-alias v04="ssh aandonia@visiongpu04.csail.mit.edu"
-alias v05="ssh aandonia@visiongpu05.csail.mit.edu"
-alias v08="ssh aandonia@visiongpu08.csail.mit.edu"
-alias v10="ssh aandonia@visiongpu10.csail.mit.edu"
-alias v11="ssh aandonia@visiongpu11.csail.mit.edu"
-alias v12="ssh aandonia@visiongpu12.csail.mit.edu"
-alias v13="ssh aandonia@visiongpu13.csail.mit.edu"
-alias v14="ssh aandonia@visiongpu14.csail.mit.edu"
-alias v15="ssh aandonia@visiongpu15.csail.mit.edu"
-alias v16="ssh aandonia@visiongpu16.csail.mit.edu"
-alias v17="ssh aandonia@visiongpu17.csail.mit.edu"
-alias v18="ssh aandonia@visiongpu18.csail.mit.edu"
-alias v19="ssh aandonia@visiongpu19.csail.mit.edu"
-alias v20="ssh aandonia@visiongpu20.csail.mit.edu"
-alias v21="ssh aandonia@visiongpu21.csail.mit.edu"
-alias v22="ssh aandonia@visiongpu22.csail.mit.edu"
-alias v23="ssh aandonia@visiongpu23.csail.mit.edu"
-alias v24="ssh aandonia@visiongpu24.csail.mit.edu"
-alias v25="ssh aandonia@visiongpu25.csail.mit.edu"
-alias v26="ssh aandonia@visiongpu26.csail.mit.edu"
-alias v27="ssh aandonia@visiongpu27.csail.mit.edu"
-alias v28="ssh aandonia@visiongpu28.csail.mit.edu"
-alias v29="ssh aandonia@visiongpu29.csail.mit.edu"
-alias v30="ssh aandonia@visiongpu30.csail.mit.edu"
-alias v31="ssh aandonia@visiongpu31.csail.mit.edu"
-alias v32="ssh aandonia@visiongpu32.csail.mit.edu"
-alias v33="ssh aandonia@visiongpu33.csail.mit.edu"
-alias v34="ssh aandonia@visiongpu34.csail.mit.edu"
-alias v35="ssh aandonia@visiongpu35.csail.mit.edu"
-alias v36="ssh aandonia@visiongpu36.csail.mit.edu"
-alias v37="ssh aandonia@visiongpu37.csail.mit.edu"
-alias v38="ssh aandonia@visiongpu38.csail.mit.edu"
-alias v39="ssh aandonia@visiongpu39.csail.mit.edu"
-alias v40="ssh aandonia@visiongpu40.csail.mit.edu"
-alias v41="ssh aandonia@visiongpu41.csail.mit.edu"
-alias v42="ssh aandonia@visiongpu42.csail.mit.edu"
-alias v43="ssh aandonia@visiongpu43.csail.mit.edu"
+alias tv='ssh -fNL 8888:localhost:8888 andonian@visiongpu52.csail.mit.edu'
 
-alias tues="ssh aandonia@tuesday.csail.mit.edu"
-alias wed="ssh aandonia@wednesday.csail.mit.edu"
+alias v="ssh andonian@visiongpu52.csail.mit.edu"
+alias v02="ssh andonian@visiongpu02.csail.mit.edu"
+alias v03="ssh andonian@visiongpu03.csail.mit.edu"
+alias v04="ssh andonian@visiongpu04.csail.mit.edu"
+alias v05="ssh andonian@visiongpu05.csail.mit.edu"
+alias v08="ssh andonian@visiongpu08.csail.mit.edu"
+alias v10="ssh andonian@visiongpu10.csail.mit.edu"
+alias v11="ssh andonian@visiongpu11.csail.mit.edu"
+alias v12="ssh andonian@visiongpu12.csail.mit.edu"
+alias v13="ssh andonian@visiongpu13.csail.mit.edu"
+alias v14="ssh andonian@visiongpu14.csail.mit.edu"
+alias v15="ssh andonian@visiongpu15.csail.mit.edu"
+alias v16="ssh andonian@visiongpu16.csail.mit.edu"
+alias v17="ssh andonian@visiongpu17.csail.mit.edu"
+alias v18="ssh andonian@visiongpu18.csail.mit.edu"
+alias v19="ssh andonian@visiongpu19.csail.mit.edu"
+alias v20="ssh andonian@visiongpu20.csail.mit.edu"
+alias v21="ssh andonian@visiongpu21.csail.mit.edu"
+alias v22="ssh andonian@visiongpu22.csail.mit.edu"
+alias v23="ssh andonian@visiongpu23.csail.mit.edu"
+alias v24="ssh andonian@visiongpu24.csail.mit.edu"
+alias v25="ssh andonian@visiongpu25.csail.mit.edu"
+alias v26="ssh andonian@visiongpu26.csail.mit.edu"
+alias v27="ssh andonian@visiongpu27.csail.mit.edu"
+alias v28="ssh andonian@visiongpu28.csail.mit.edu"
+alias v29="ssh andonian@visiongpu29.csail.mit.edu"
+alias v30="ssh andonian@visiongpu30.csail.mit.edu"
+alias v31="ssh andonian@visiongpu31.csail.mit.edu"
+alias v32="ssh andonian@visiongpu32.csail.mit.edu"
+alias v33="ssh andonian@visiongpu33.csail.mit.edu"
+alias v34="ssh andonian@visiongpu34.csail.mit.edu"
+alias v35="ssh andonian@visiongpu35.csail.mit.edu"
+alias v36="ssh andonian@visiongpu36.csail.mit.edu"
+alias v37="ssh andonian@visiongpu37.csail.mit.edu"
+alias v38="ssh andonian@visiongpu38.csail.mit.edu"
+alias v39="ssh andonian@visiongpu39.csail.mit.edu"
+alias v40="ssh andonian@visiongpu40.csail.mit.edu"
+alias v41="ssh andonian@visiongpu41.csail.mit.edu"
+alias v42="ssh andonian@visiongpu42.csail.mit.edu"
+alias v43="ssh andonian@visiongpu43.csail.mit.edu"
+alias v44="ssh andonian@visiongpu44.csail.mit.edu"
+alias v45="ssh andonian@visiongpu45.csail.mit.edu"
+alias v46="ssh andonian@visiongpu46.csail.mit.edu"
+alias v47="ssh andonian@visiongpu47.csail.mit.edu"
+alias v48="ssh andonian@visiongpu48.csail.mit.edu"
+alias v49="ssh andonian@visiongpu49.csail.mit.edu"
+alias v50="ssh andonian@visiongpu50.csail.mit.edu"
+alias v51="ssh andonian@visiongpu51.csail.mit.edu"
+alias v52="ssh andonian@visiongpu52.csail.mit.edu"
+alias v53="ssh andonian@visiongpu53.csail.mit.edu"
+alias v54="ssh andonian@visiongpu54.csail.mit.edu"
+alias v55="ssh andonian@visiongpu55.csail.mit.edu"
 
-alias c="ssh aandonia@vision20.csail.mit.edu"
-alias c04="ssh aandonia@vision04.csail.mit.edu"
-alias c05="ssh aandonia@vision05.csail.mit.edu"
-alias c08="ssh aandonia@vision08.csail.mit.edu"
-alias c10="ssh aandonia@vision10.csail.mit.edu"
-alias c12="ssh aandonia@vision12.csail.mit.edu"
-alias c13="ssh aandonia@vision13.csail.mit.edu"
-alias c14="ssh aandonia@vision14.csail.mit.edu"
-alias c15="ssh aandonia@vision15.csail.mit.edu"
-alias c16="ssh aandonia@vision16.csail.mit.edu"
-alias c17="ssh aandonia@vision17.csail.mit.edu"
-alias c18="ssh aandonia@vision18.csail.mit.edu"
-alias c19="ssh aandonia@vision19.csail.mit.edu"
-alias c20="ssh aandonia@vision20.csail.mit.edu"
-alias c21="ssh aandonia@vision21.csail.mit.edu"
-alias c22="ssh aandonia@vision22.csail.mit.edu"
-alias c23="ssh aandonia@vision23.csail.mit.edu"
-alias c24="ssh aandonia@vision24.csail.mit.edu"
-alias c25="ssh aandonia@vision25.csail.mit.edu"
-alias c26="ssh aandonia@vision26.csail.mit.edu"
-alias c27="ssh aandonia@vision27.csail.mit.edu"
-alias c28="ssh aandonia@vision28.csail.mit.edu"
-alias c29="ssh aandonia@vision29.csail.mit.edu"
-alias c30="ssh aandonia@vision30.csail.mit.edu"
-alias c31="ssh aandonia@vision31.csail.mit.edu"
-alias c32="ssh aandonia@vision32.csail.mit.edu"
-alias c33="ssh aandonia@vision33.csail.mit.edu"
-alias c34="ssh aandonia@vision34.csail.mit.edu"
-alias c35="ssh aandonia@vision35.csail.mit.edu"
-alias c36="ssh aandonia@vision36.csail.mit.edu"
-alias c37="ssh aandonia@vision37.csail.mit.edu"
-alias c38="ssh aandonia@vision38.csail.mit.edu"
-alias c39="ssh aandonia@vision39.csail.mit.edu"
+alias tues="ssh andonian@tuesday.csail.mit.edu"
+alias wed="ssh andonian@wednesday.csail.mit.edu"
+alias sat="ssh andonian@satori-login-001.mit.edu"
+alias sat-data="ssh andonian@satori-login-002.mit.edu"
+
+alias c="ssh andonian@vision20.csail.mit.edu"
+alias c04="ssh andonian@vision04.csail.mit.edu"
+alias c05="ssh andonian@vision05.csail.mit.edu"
+alias c08="ssh andonian@vision08.csail.mit.edu"
+alias c10="ssh andonian@vision10.csail.mit.edu"
+alias c12="ssh andonian@vision12.csail.mit.edu"
+alias c13="ssh andonian@vision13.csail.mit.edu"
+alias c14="ssh andonian@vision14.csail.mit.edu"
+alias c15="ssh andonian@vision15.csail.mit.edu"
+alias c16="ssh andonian@vision16.csail.mit.edu"
+alias c17="ssh andonian@vision17.csail.mit.edu"
+alias c18="ssh andonian@vision18.csail.mit.edu"
+alias c19="ssh andonian@vision19.csail.mit.edu"
+alias c20="ssh andonian@vision20.csail.mit.edu"
+alias c21="ssh andonian@vision21.csail.mit.edu"
+alias c22="ssh andonian@vision22.csail.mit.edu"
+alias c23="ssh andonian@vision23.csail.mit.edu"
+alias c24="ssh andonian@vision24.csail.mit.edu"
+alias c25="ssh andonian@vision25.csail.mit.edu"
+alias c26="ssh andonian@vision26.csail.mit.edu"
+alias c27="ssh andonian@vision27.csail.mit.edu"
+alias c28="ssh andonian@vision28.csail.mit.edu"
+alias c29="ssh andonian@vision29.csail.mit.edu"
+alias c30="ssh andonian@vision30.csail.mit.edu"
+alias c31="ssh andonian@vision31.csail.mit.edu"
+alias c32="ssh andonian@vision32.csail.mit.edu"
+alias c33="ssh andonian@vision33.csail.mit.edu"
+alias c34="ssh andonian@vision34.csail.mit.edu"
+alias c35="ssh andonian@vision35.csail.mit.edu"
+alias c36="ssh andonian@vision36.csail.mit.edu"
+alias c37="ssh andonian@vision37.csail.mit.edu"
+alias c38="ssh andonian@vision38.csail.mit.edu"
+alias c39="ssh andonian@vision39.csail.mit.edu"
+alias pok="ssh b8p347ah@p10login1.pbm.ihost.com"
+
 # Neuroailab Cluster aliases
 alias kan="ssh aandonia@171.64.40.90"
 
 # Filesystem Mounts
-alias mnfs="sshfs aandonia@visiongpu23.csail.mit.edu:/data /nfs -ovolname=NFS"
+alias mnfs="sshfs andonian@visiongpu23.csail.mit.edu:/data /nfs -ovolname=NFS"
 alias mkan="sshfs aandonia@kanefsky:/home/aandonia /kan -ovolname=KAN"
 alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
+
+talp() {
+    #ssh -fNL "$1":localhost:"$2" andonian@ando-lambda.csail.mit.edu
+    if [[ -z "$2" ]]; then
+    	ssh -fNL "$1":localhost:"$1" ando-lambda
+    else
+    	ssh -fNL "$1":localhost:"$2" ando-lambda
+    fi
+}
+
+tsatp() {
+    ssh -fNL "$1":localhost:"$2" satori
+}
 
 gif() {
         ffmpeg -i "$1" -r 10 -f gif - | gifsicle --optimize=3 --delay=15 > "${1%.*}.gif"
@@ -171,3 +254,19 @@ if [ -f '/Users/alexandonian/Desktop/google-cloud-sdk/path.zsh.inc' ]; then . '/
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/alexandonian/Desktop/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/alexandonian/Desktop/google-cloud-sdk/completion.zsh.inc'; fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/alexandonian/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/alexandonian/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/alexandonian/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/alexandonian/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
