@@ -65,40 +65,56 @@ fi
 test -f /etc/profile.d/modules.sh && source /etc/profile.d/modules.sh
 
 export PATH=${HOME}/bin:$PATH
+export PATH=${PATH}:${HOME}/.local/bin
+export CPATH=${HOME}/.local/include
 
-export MKL_HOME=/opt/intel/mkl
-export PATH=${MKL_HOME}/bin:$PATH
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
-export CUDA_HOME=/usr/local/cuda-10.1
+
+# Go Lang
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+# Cuda
+export CUDA_HOME=/usr/local/cuda
 export PATH=${CUDA_HOME}/bin:$PATH
 
-export NCCL_SOCKET_IFNAME=eth0
-export NCCL_HOME=/usr/local/nccl-2.4
-export OPENMPI_HOME=/opt/openmpi-4.0.0
-
+#export NCCL_SOCKET_IFNAME=enp179s0f0
+export NCCL_SOCKET_IFNAME=enp180s0f0
 export NVVL_HOME=${HOME}/lib/nvvl
 
-# Anaconda last in path to provide conda without masking system python
-#export ANACONDA_HOME=/opt/anaconda
+# Data related env variables
+export DATA_ROOT=/data/datasets
+export SCRATCH=/data/vision/oliva/scratch
+export SCRATCH_DATA_ROOT=${SCRATCH}/datasets
+export SCRATCH_HOME=${SCRATCH}/andonian
+
+# Anaconda Python
 export ANACONDA_HOME=${HOME}/anaconda3
 export PATH=${ANACONDA_HOME}/bin:$PATH
-#export PATH=$PATH:${ANACONDA_HOME}/bin
-
-# Caffe is built locally to the machine
-export CAFFE_HOME=/opt/caffe
-export PATH=$PATH:${CAFFE_HOME}/bin
-
-export OPENCV_HOME=/data/vision/torralba/datasetbias/lib/opencv/2.4.5/install/lib/
-export PATH=$PATH:${OPENCV_HOME}
-
-# Matlab is at the end to prevent masking system "ldd"
-export MATLAB_ROOT=/afs/csail.mit.edu/system/common/matlab/latest
-export PATH=$PATH:${MATLAB_ROOT}/bin
 
 #export LIBGLVND_HOME=${HOME}/lib/libglvnd/install/lib
 #export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${LIBGLVND_HOME}/pkgconfig
 #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LIBGLVND_HOME}:/usr/local/lib
 #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LIBGLVND_HOME}:${ANACONDA_HOME}/lib
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:usr/lib/x86_64-linux-gnu
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NCCL_HOME}/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NVVL_HOME}/build
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/x86_64-linux-gnu
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
+
+export PYTEST_ADDOPTS="-W ignore::DeprecationWarning"
+
+export TF_CPP_MIN_LOG_LEVEL=3
+
+# For emscripten
+PATH=${PATH}:/home/andonian/lib/emsdk:/home/andonian/lib/emsdk/upstream/emscripten:/home/andonian/lib/emsdk/node/12.9.1_64bit/bin
+
+export EMSDK=/home/andonian/lib/emsdk
+export EM_CONFIG=/home/andonian/.emscripten
+export EMSDK_NODE=/home/andonian/lib/emsdk/node/12.9.1_64bit/bin/node
+export EMSCRIPTEN=/home/andonian/lib/emsdk/upstream/emscripten
