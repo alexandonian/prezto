@@ -60,8 +60,8 @@ alias stop_gdm="sudo systemctl stop gdm3"
 alias sat="ssh andonian@satori-login-001.mit.edu"
 alias sat-data="ssh andonian@satori-login-002.mit.edu"
 alias cs="cd ${SCRATCH_HOME}"
+alias freeswap="sudo swapoff -a && sudo swapon -a"
 
-source ~/.api-keys
 
 c() {
     export CUDA_VISIBLE_DEVICES="$@";
@@ -75,7 +75,7 @@ tb() {
     fi
     # For ando-lambda-home
     # tensorboard --logdir=$logdir --host $(hostname).csail.mit.edu
-    tensorboard --logdir=$logdir --host andonian.io 
+    tensorboard --logdir=$logdir --host ando.ai 
 }
 
 # >>> conda initialize >>>
@@ -90,6 +90,11 @@ else
         export PATH="/home/andonian/anaconda3/bin:$PATH"
     fi
 fi
-unset __conda_setup
+#unset __conda_setup
 # <<< conda initialize <<<
+
+
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+fpath+=~/.zfunc
 
