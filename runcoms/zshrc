@@ -61,7 +61,7 @@ alias sat="ssh andonian@satori-login-001.mit.edu"
 alias sat-data="ssh andonian@satori-login-002.mit.edu"
 alias cs="cd ${SCRATCH_HOME}"
 
-source ~/.api-keys
+source ~/.env
 
 c() {
     export CUDA_VISIBLE_DEVICES="$@";
@@ -75,7 +75,7 @@ tb() {
     fi
     # For ando-lambda-home
     # tensorboard --logdir=$logdir --host $(hostname).csail.mit.edu
-    tensorboard --logdir=$logdir --host andonian.io 
+    tensorboard --logdir=$logdir --host andonian.io
 }
 
 # >>> conda initialize >>>
