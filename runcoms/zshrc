@@ -53,13 +53,16 @@ alias gs="git status"
 alias nv="gpustat -FP -i 0.5"
 alias fire="python -m fire"
 alias f="fire"
-alias gla="glances"
+alias gla="glances -b"
+alias glaa="glances -b -f username:andonian"
+alias glas="glances -b --sparkline"
 alias start_gdm="sudo systemctl start gdm3"
 alias stop_gdm="sudo systemctl stop gdm3"
 
-alias sat="ssh andonian@satori-login-001.mit.edu"
+alias sat="ssh andonian@satori-login-002.mit.edu"
 alias sat-data="ssh andonian@satori-login-002.mit.edu"
 alias cs="cd ${SCRATCH_HOME}"
+alias hf="huggingface-cli"
 
 source ~/.env
 
@@ -93,3 +96,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# bun completions
+[ -s "/home/andonian/.bun/_bun" ] && source "/home/andonian/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

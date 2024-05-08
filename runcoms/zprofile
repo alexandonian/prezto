@@ -127,4 +127,9 @@ PATH=${PATH}:/home/andonian/lib/emsdk:/home/andonian/lib/emsdk/upstream/emscript
 export EMSDK=/home/andonian/lib/emsdk
 export EM_CONFIG=/home/andonian/.emscripten
 export EMSDK_NODE=/home/andonian/lib/emsdk/node/12.9.1_64bit/bin/node
-export EMSCRIPTEN=/home/andonian/lib/emsdk/upstream/emscripten
+
+
+export WANDB_RESUME=allow
+export WANDB_ENTITY=andonian
+export WANDB_BASE_URL=https://wandb.ando.ai
+export WANDB_API_KEY=local-c380455348e4a47e4cb9db17e137694c5439c6e3
