@@ -98,33 +98,45 @@ pisces_pw() {
 # Tool initializations (lazy-loaded where possible)
 # ---------------------------------------------------------------------------
 
-# NVM — lazy init (saves ~100ms per shell)
-# Creates placeholder functions that init nvm on first use.
-if [[ -d "$HOME/.nvm" ]]; then
-  export NVM_DIR="$HOME/.nvm"
-  _lazy_nvm() {
-    unfunction node npm npx nvm 2>/dev/null
+# NVM — eager PATH, lazy shell integration
+# Add the default node's bin to PATH immediately (so npm/node/npx always work,
+# including in just recipes and non-interactive subshells). Only the nvm command
+# itself triggers the full nvm.sh load (~100ms), which you need for switching
+# node versions.
+export NVM_DIR="$HOME/.nvm"
+if [[ -d "$NVM_DIR" ]]; then
+  # Add default node to PATH without sourcing nvm.sh
+  _nvm_default_bin=$(ls -d "$NVM_DIR"/versions/node/*/bin 2>/dev/null | sort -V | tail -1)
+  [[ -n "$_nvm_default_bin" ]] && export PATH="$_nvm_default_bin:$PATH"
+  unset _nvm_default_bin
+
+  # Lazy-load only the nvm command itself
+  nvm() {
+    unfunction nvm 2>/dev/null
     [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+    nvm "$@"
   }
-  node()  { _lazy_nvm && node  "$@"; }
-  npm()   { _lazy_nvm && npm   "$@"; }
-  npx()   { _lazy_nvm && npx   "$@"; }
-  nvm()   { _lazy_nvm && nvm   "$@"; }
 fi
 
-# Conda — lazy init (saves ~280ms per shell)
-# anaconda3/bin is already on PATH via .zprofile, so python/pip/gpustat work.
-# This only inits the conda shell integration when you first use it.
-if [[ -d "$HOME/anaconda3" || -d "$HOME/miniconda3" ]]; then
+# Conda — eager CONDA_PREFIX, lazy shell integration
+# anaconda3/bin is on PATH via .zprofile, so python/pip/gpustat/maturin work.
+# We also set CONDA_PREFIX eagerly so maturin can find the base environment.
+# The full conda shell hook (~280ms) only loads when you run `conda activate`.
+if [[ -d "$HOME/anaconda3" ]]; then
+  export CONDA_PREFIX="$HOME/anaconda3"
+elif [[ -d "$HOME/miniconda3" ]]; then
+  export CONDA_PREFIX="$HOME/miniconda3"
+fi
+
+if [[ -n "${CONDA_PREFIX:-}" ]]; then
   conda() {
     unfunction conda
-    local conda_home="${ANACONDA_HOME:-$HOME/anaconda3}"
-    __conda_setup="$("$conda_home/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
+    __conda_setup="$("$CONDA_PREFIX/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
     if [[ $? -eq 0 ]]; then
       eval "$__conda_setup"
     else
-      [[ -f "$conda_home/etc/profile.d/conda.sh" ]] && . "$conda_home/etc/profile.d/conda.sh"
+      [[ -f "$CONDA_PREFIX/etc/profile.d/conda.sh" ]] && . "$CONDA_PREFIX/etc/profile.d/conda.sh"
     fi
     unset __conda_setup
     conda "$@"
