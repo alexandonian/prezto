@@ -10,18 +10,21 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
 autoload -U compinit && compinit -u
 
 # Autojump
-. /usr/share/autojump/autojump.sh
+if [[ -s /usr/share/autojump/autojump.sh ]]; then
+  . /usr/share/autojump/autojump.sh
+elif [[ -s /opt/homebrew/etc/profile.d/autojump.sh ]]; then
+  . /opt/homebrew/etc/profile.d/autojump.sh
+fi
 
-
-# Mixed (custom) Vi-Emacs keybindings
+# ---------------------------------------------------------------------------
+# Keybindings: Vi mode with Emacs conveniences
+# ---------------------------------------------------------------------------
 bindkey -v "^A" beginning-of-line
 bindkey -v "^B" backward-char
 bindkey -v "^E" end-of-line
-bindkey -v "^B" backward-char
 bindkey -v "^F" forward-char
 bindkey -v "^K" kill-line
 bindkey -v "^N" history-substring-search-down
@@ -37,69 +40,104 @@ bindkey -M vicmd "^U" kill-whole-line
 bindkey -M vicmd "^N" history-substring-search-down
 bindkey -M vicmd "^P" history-substring-search-up
 bindkey -M vicmd v edit-command-line
-#export KEYTIMEOUT=1
 
-export EDITOR=vim
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-alias mdb="mongod -f /data/vision/oliva/scratch/aandonia/data/mongod.conf"
-alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
+# ---------------------------------------------------------------------------
+# Aliases — universal
+# ---------------------------------------------------------------------------
 alias t="tmux"
 alias ta="tmux a"
 alias gs="git status"
-alias nv="gpustat -FP -i 0.5"
-alias fire="python -m fire"
-alias f="fire"
-alias gla="glances -b"
-alias glaa="glances -b -f username:andonian"
-alias glas="glances -b --sparkline"
-alias start_gdm="sudo systemctl start gdm3"
-alias stop_gdm="sudo systemctl stop gdm3"
-
-alias sat="ssh andonian@satori-login-002.mit.edu"
-alias sat-data="ssh andonian@satori-login-002.mit.edu"
-alias cs="cd ${SCRATCH_HOME}"
+alias suv="source .venv/bin/activate"
+alias cl="claude"
 alias hf="huggingface-cli"
+alias u="uniclaw"
+alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
 
-source ~/.env
+unalias gws 2>/dev/null
 
-c() {
-    export CUDA_VISIBLE_DEVICES="$@";
-}
+# Aliases — monitoring (work anywhere glances/gpustat are installed)
+alias gla="glances -b"
 
-tb() {
-    logdir="$1"
-    if [ -z $logdir ]
-        then
-	    logdir=logs
-    fi
-    # For ando-lambda-home
-    # tensorboard --logdir=$logdir --host $(hostname).csail.mit.edu
-    tensorboard --logdir=$logdir --host andonian.io
-}
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/andonian/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/andonian/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/andonian/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/andonian/anaconda3/bin:$PATH"
-    fi
+# Aliases — Linux / GPU machines only
+if [[ "$OSTYPE" == linux* ]]; then
+  alias nv="gpustat -FP -i 0.5"
+  alias glas="glances -b --sparkline"
+  alias start_gdm="sudo systemctl start gdm3"
+  alias stop_gdm="sudo systemctl stop gdm3"
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
+# ---------------------------------------------------------------------------
+# API keys & secrets (not in version control)
+# ---------------------------------------------------------------------------
+[[ -f ~/.env ]] && source ~/.env
 
-# bun completions
-[ -s "/home/andonian/.bun/_bun" ] && source "/home/andonian/.bun/_bun"
+# ---------------------------------------------------------------------------
+# Functions
+# ---------------------------------------------------------------------------
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# uv run python shortcut
+upy() { uv run python "$@"; }
+if type compdef &>/dev/null; then
+  compdef _python upy=python
+fi
+
+# Generate Pisces auth password from first commit hash
+pisces_pw() {
+  local repo="${1:-$HOME/dev/uni/uniclaw}"
+  local hash
+  hash=$(git -C "$repo" log --author="Pisces\|pisces" --reverse --format="%H" | head -1 | cut -c1-8)
+  if [[ -z "$hash" ]]; then
+    echo "Error: no Pisces commits found in $repo" >&2
+    return 1
+  fi
+  echo -n "AugmentedMemories3.14${hash}" | shasum -a 256 | cut -c1-16 | tr -d '\n'
+  echo '!P'
+}
+
+# ---------------------------------------------------------------------------
+# Tool initializations (lazy-loaded where possible)
+# ---------------------------------------------------------------------------
+
+# NVM — lazy init (saves ~100ms per shell)
+# Creates placeholder functions that init nvm on first use.
+if [[ -d "$HOME/.nvm" ]]; then
+  export NVM_DIR="$HOME/.nvm"
+  _lazy_nvm() {
+    unfunction node npm npx nvm 2>/dev/null
+    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+  }
+  node()  { _lazy_nvm && node  "$@"; }
+  npm()   { _lazy_nvm && npm   "$@"; }
+  npx()   { _lazy_nvm && npx   "$@"; }
+  nvm()   { _lazy_nvm && nvm   "$@"; }
+fi
+
+# Conda — lazy init (saves ~280ms per shell)
+# anaconda3/bin is already on PATH via .zprofile, so python/pip/gpustat work.
+# This only inits the conda shell integration when you first use it.
+if [[ -d "$HOME/anaconda3" || -d "$HOME/miniconda3" ]]; then
+  conda() {
+    unfunction conda
+    local conda_home="${ANACONDA_HOME:-$HOME/anaconda3}"
+    __conda_setup="$("$conda_home/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
+    if [[ $? -eq 0 ]]; then
+      eval "$__conda_setup"
+    else
+      [[ -f "$conda_home/etc/profile.d/conda.sh" ]] && . "$conda_home/etc/profile.d/conda.sh"
+    fi
+    unset __conda_setup
+    conda "$@"
+  }
+fi
+
+# Google Cloud SDK
+[[ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]] && . "$HOME/.google-cloud-sdk/path.zsh.inc"
+[[ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ]] && . "$HOME/.google-cloud-sdk/completion.zsh.inc"
+
+# ---------------------------------------------------------------------------
+# Machine-local overrides (not in version control)
+# ---------------------------------------------------------------------------
+# Use ~/.zshrc.local for machine-specific config: ORCA paths, LM Studio,
+# custom aliases, etc. This file is gitignored and stays on the machine.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

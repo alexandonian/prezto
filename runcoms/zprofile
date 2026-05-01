@@ -42,11 +42,6 @@ fi
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Set the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
 # Set the list of directories that Zsh searches for programs.
 path=(
   $HOME/{,s}bin(N)
@@ -60,17 +55,18 @@ path=(
 #
 
 # Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X to enable it.
 if [[ -z "$LESS" ]]; then
   export LESS='-g -i -M -R -S -w -X -z-4'
 fi
 
 # Set the Less input preprocessor.
-# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
 if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+# ---------------------------------------------------------------------------
+# Machine-specific paths and environment
+# ---------------------------------------------------------------------------
 
 test -f /etc/profile.d/modules.sh && source /etc/profile.d/modules.sh
 
@@ -78,58 +74,36 @@ export PATH=${HOME}/bin:$PATH
 export PATH=${PATH}:${HOME}/.local/bin
 export CPATH=${HOME}/.local/include
 
-# rust
-export PATH="$HOME/.cargo/bin:$PATH"
+# Go
+if [[ -d /usr/local/go ]]; then
+  export GOROOT=/usr/local/go
+  export GOPATH=$HOME/go
+  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
 
+# CUDA (Linux only)
+if [[ -d /usr/local/cuda ]]; then
+  export CUDA_HOME=/usr/local/cuda
+  export PATH=${CUDA_HOME}/bin:$PATH
+  export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${CUDA_HOME}/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+fi
 
-# Go Lang
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+# Anaconda / Miniconda
+if [[ -d "$HOME/anaconda3" ]]; then
+  export ANACONDA_HOME=${HOME}/anaconda3
+  export PATH=${ANACONDA_HOME}/bin:$PATH
+elif [[ -d "$HOME/miniconda3" ]]; then
+  export ANACONDA_HOME=${HOME}/miniconda3
+  export PATH=${ANACONDA_HOME}/bin:$PATH
+fi
 
-# Cuda
-export CUDA_HOME=/usr/local/cuda
-export PATH=${CUDA_HOME}/bin:$PATH
+# Homebrew (macOS)
+if [[ "$OSTYPE" == darwin* && -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-#export NCCL_SOCKET_IFNAME=enp179s0f0
-export NCCL_SOCKET_IFNAME=enp180s0f0
-export NVVL_HOME=${HOME}/lib/nvvl
+# User libraries
+[[ -d "${HOME}/.local/lib" ]] && export LD_LIBRARY_PATH=${HOME}/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 
-# Data related env variables
-export DATA_ROOT=/data/datasets
-export SCRATCH=/data/vision/oliva/scratch
-export SCRATCH_DATA_ROOT=${SCRATCH}/datasets
-export SCRATCH_HOME=${SCRATCH}/andonian
-
-# Anaconda Python
-export ANACONDA_HOME=${HOME}/anaconda3
-export PATH=${ANACONDA_HOME}/bin:$PATH
-
-#export LIBGLVND_HOME=${HOME}/lib/libglvnd/install/lib
-#export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${LIBGLVND_HOME}/pkgconfig
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LIBGLVND_HOME}:/usr/local/lib
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LIBGLVND_HOME}:${ANACONDA_HOME}/lib
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:usr/lib/x86_64-linux-gnu
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NCCL_HOME}/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NVVL_HOME}/build
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
-
+# Pytest: suppress deprecation warnings
 export PYTEST_ADDOPTS="-W ignore::DeprecationWarning"
-
-export TF_CPP_MIN_LOG_LEVEL=3
-
-# For emscripten
-PATH=${PATH}:/home/andonian/lib/emsdk:/home/andonian/lib/emsdk/upstream/emscripten:/home/andonian/lib/emsdk/node/12.9.1_64bit/bin
-
-export EMSDK=/home/andonian/lib/emsdk
-export EM_CONFIG=/home/andonian/.emscripten
-export EMSDK_NODE=/home/andonian/lib/emsdk/node/12.9.1_64bit/bin/node
-
-
-export WANDB_RESUME=allow
-export WANDB_ENTITY=andonian
-export WANDB_BASE_URL=https://wandb.ando.ai
-export WANDB_API_KEY=local-c380455348e4a47e4cb9db17e137694c5439c6e3
