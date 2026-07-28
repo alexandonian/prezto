@@ -198,6 +198,40 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 # Set the SSH identities to load into the agent.
 # zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
+# Keep the persistent agent socket and env file on node-local storage.
+#
+# The ssh module defaults them to ${XDG_CACHE_HOME:-~/.cache}/prezto, which breaks
+# on hosts where ~/.cache is a symlink into a shared filesystem (the Edison login
+# nodes symlink it to Lustre): every node then rewrites one shared socket link to a
+# /tmp path that exists on only one of them, and the same file becomes reachable
+# under two spellings, which defeats the module's textual
+# "$SSH_AUTH_SOCK != $_ssh_agent_sock" guard and lets it symlink the socket to
+# itself. GNU mv stats its destination before renaming, so it cannot replace a
+# self-referential link -- every later login dies with
+# "mv: failed to access ...: Too many levels of symbolic links".
+_ssh_agent_dir=''
+if [[ -n $XDG_RUNTIME_DIR && -d $XDG_RUNTIME_DIR && -w $XDG_RUNTIME_DIR ]]; then
+  _ssh_agent_dir="$XDG_RUNTIME_DIR/prezto"
+else
+  # Name it per-uid, and only use it if we own it -- /tmp is world-writable, so a
+  # squatted directory could be used to swap in someone else's agent socket.
+  _ssh_agent_dir="${${TMPDIR:-/tmp}%/}/prezto-$UID"
+  [[ -e $_ssh_agent_dir && ! -O $_ssh_agent_dir ]] && _ssh_agent_dir=''
+fi
+if [[ -n $_ssh_agent_dir ]] && mkdir -p -m 700 $_ssh_agent_dir 2>/dev/null; then
+  _ssh_agent_env="$_ssh_agent_dir/ssh-agent.env"
+  _ssh_agent_sock="$_ssh_agent_dir/ssh-agent.sock"
+
+  # Drop a socket link that no longer resolves to a socket (dangling, or looping)
+  # so the module can recreate it, and sweep temp links left by a failed replace.
+  [[ -L $_ssh_agent_sock && ! -S $_ssh_agent_sock ]] && command rm -f -- $_ssh_agent_sock
+  for _f in $_ssh_agent_sock.*(N@); do
+    [[ -S $_f ]] || command rm -f -- $_f
+  done
+  unset _f
+fi
+unset _ssh_agent_dir
+
 #
 # Syntax Highlighting
 #
