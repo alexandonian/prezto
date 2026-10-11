@@ -52,15 +52,21 @@ alias cl="claude"
 alias hf="huggingface-cli"
 alias u="uniclaw"
 alias rmpyc='find . -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete'
+alias a="ssh ando"
 
 unalias gws 2>/dev/null
 
 # Aliases — monitoring (work anywhere glances/gpustat are installed)
 alias gla="glances -b"
+alias f="ferrisight"
 
 # Aliases — Linux / GPU machines only
 if [[ "$OSTYPE" == linux* ]]; then
-  alias nv="gpustat -FP -i 0.5"
+  if (( $+commands[ferrisight] )); then
+    alias nv="ferrisight --gpu 0.5"
+  else
+    alias nv="gpustat -FP -i 0.5"
+  fi
   alias glas="glances -b --sparkline"
   alias start_gdm="sudo systemctl start gdm3"
   alias stop_gdm="sudo systemctl stop gdm3"
@@ -176,6 +182,12 @@ fi
 # ---------------------------------------------------------------------------
 # Machine-local overrides (not in version control)
 # ---------------------------------------------------------------------------
-# Use ~/.zshrc.local for machine-specific config: ORCA paths, LM Studio,
+# Use ~/.zshrc.local for machine-specific config: LM Studio,
 # custom aliases, etc. This file is gitignored and stays on the machine.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Tool paths, each added only if installed
+[[ -d "$HOME/.kimi-code/bin" ]] && export PATH="$HOME/.kimi-code/bin:$PATH"
+export BUN_INSTALL="$HOME/.bun"
+[[ -d "$BUN_INSTALL/bin" ]] && export PATH="$BUN_INSTALL/bin:$PATH"
+[[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
