@@ -110,3 +110,9 @@ export PYTEST_ADDOPTS="-W ignore::DeprecationWarning"
 
 # Added by machine-setup install_conda.sh (inert where Anaconda is absent)
 [[ -d /home/andonian/anaconda3/bin ]] && export PATH="/home/andonian/anaconda3/bin:$PATH"
+
+# CUDA toolkit (inert where absent)
+if [[ -d /usr/local/cuda/bin ]]; then
+  export CUDA_HOME=/usr/local/cuda
+  path=(/usr/local/cuda/bin $path)
+fi
